@@ -37,7 +37,21 @@ const ContactState = (props) => {
     };
 
     // Add Contact
-    const addContact = async (contact) => {};
+    const addContact = async (contact) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        try {
+            const res = await axios.post(`/api/contacts`, contact, config);
+
+            dispatch({ type: ADD_CONTACT, payload: res.data });
+        } catch (error) {
+            dispatch({ type: CONTACT_ERROR, payload: error.response.msg });
+        }
+    };
     // Delete Contact
     const deleteContact = async (id) => {
         try {
